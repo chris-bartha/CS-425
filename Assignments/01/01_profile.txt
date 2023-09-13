@@ -1,0 +1,98 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 21.43      1.53     1.53 673337808     0.00     0.00  Transform::float4::dot(Vertex const&) const
+ 15.48      2.63     1.10 168334452     0.00     0.00  Transform::float4::perspectiveDivide() const
+ 12.82      3.55     0.92 168334452     0.00     0.00  Transform::operator*(Vertex const&)
+  7.84      4.11     0.56 28055742     0.00     0.00  computePerimeter(Face const&, std::span<Vertex, 18446744073709551615ul> const&)
+  7.07      4.62     0.51 168334452     0.00     0.00  transform(Vertex const&)
+  5.88      5.04     0.42 28055742     0.00     0.00  decltype (::new ((void*)(0)) Face((declval<Face>)())) std::construct_at<Face, Face>(Face*, Face&&)
+  4.76      5.38     0.34 168334452     0.00     0.00  std::span<Vertex, 18446744073709551615ul>::operator[](unsigned long) const
+  3.64      5.63     0.26 84167226     0.00     0.00  distance(Vertex const&, Vertex const&)
+  2.94      5.84     0.21                             _init
+  2.45      6.02     0.17 28055742     0.00     0.00  std::vector<Face, std::allocator<Face> >::end()
+  1.89      6.16     0.14        1     0.14     1.21  readData(char const*, std::span<Vertex, 18446744073709551615ul>&, std::vector<Face, std::allocator<Face> >&)
+  1.40      6.25     0.10 84167226     0.00     0.00  std::sqrt(float)
+  1.26      6.34     0.09 56111484     0.00     0.00  __gnu_cxx::__normal_iterator<Face*, std::vector<Face, std::allocator<Face> > >::__normal_iterator(Face* const&)
+  1.26      6.43     0.09 28055742     0.00     0.00  void std::allocator_traits<std::allocator<Face> >::construct<Face, Face>(std::allocator<Face>&, Face*, Face&&)
+  1.12      6.51     0.08 28055742     0.00     0.00  Face& std::vector<Face, std::allocator<Face> >::emplace_back<Face>(Face&&)
+  1.12      6.59     0.08        4     0.02     0.02  Transform::float4::float4(float, float, float, float)
+  1.12      6.67     0.08                             main
+  0.98      6.75     0.07        1     0.07     0.07  Transform::Transform(Transform::float4, Transform::float4, Transform::float4, Transform::float4)
+  0.84      6.80     0.06 168334455     0.00     0.00  std::__is_constant_evaluated()
+  0.84      6.87     0.06 28055742     0.00     0.00  operator new(unsigned long, void*)
+  0.70      6.92     0.05 28055742     0.00     0.00  __gnu_cxx::__normal_iterator<Face*, std::vector<Face, std::allocator<Face> > >::operator-(long) const
+  0.56      6.96     0.04 28055742     0.00     0.00  std::vector<Face, std::allocator<Face> >::back()
+  0.49      6.99     0.04 28055742     0.00     0.00  __gnu_cxx::__normal_iterator<Face*, std::vector<Face, std::allocator<Face> > >::operator*() const
+  0.42      7.02     0.03 28055742     0.00     0.00  std::vector<Face, std::allocator<Face> >::operator[](unsigned long)
+  0.42      7.05     0.03        1     0.03     0.03  std::allocator<Face>::~allocator()
+  0.35      7.08     0.03 84167226     0.00     0.00  Face&& std::forward<Face>(std::remove_reference<Face>::type&)
+  0.28      7.09     0.02                             std::is_constant_evaluated()
+  0.21      7.11     0.01        1     0.01     0.02  void std::_Destroy<Face*>(Face*, Face*)
+  0.14      7.12     0.01 28055744     0.00     0.00  std::vector<Face, std::allocator<Face> >::size() const
+  0.07      7.12     0.01        1     0.01     0.05  std::vector<Face, std::allocator<Face> >::~vector()
+  0.07      7.13     0.01        1     0.01     0.01  Vertex* std::to_address<Vertex>(Vertex*)
+  0.07      7.13     0.01                             std::span<Vertex, 18446744073709551615ul>::size() const
+  0.07      7.14     0.01                             void std::vector<Face, std::allocator<Face> >::_M_realloc_insert<Face>(__gnu_cxx::__normal_iterator<Face*, std::vector<Face, std::allocator<Face> > >, Face&&)
+  0.00      7.14     0.00        3     0.00     0.00  Face* std::__niter_base<Face*>(Face*)
+  0.00      7.14     0.00        2     0.00     0.00  std::_Vector_base<Face, std::allocator<Face> >::_M_deallocate(Face*, unsigned long)
+  0.00      7.14     0.00        2     0.00     0.00  std::_Vector_base<Face, std::allocator<Face> >::_M_get_Tp_allocator()
+  0.00      7.14     0.00        1     0.00     0.15  __static_initialization_and_destruction_0(int, int)
+  0.00      7.14     0.00        1     0.00     0.00  std::_Vector_base<Face, std::allocator<Face> >::_M_get_Tp_allocator() const
+  0.00      7.14     0.00        1     0.00     0.00  std::__new_allocator<Face>::_M_max_size() const
+  0.00      7.14     0.00        1     0.00     0.00  std::vector<Face, std::allocator<Face> >::capacity() const
+  0.00      7.14     0.00        1     0.00     0.00  std::vector<Face, std::allocator<Face> >::max_size() const
+  0.00      7.14     0.00        1     0.00     0.00  void std::_Destroy_aux<true>::__destroy<Face*>(Face*, Face*)
+  0.00      7.14     0.00        1     0.00     0.00  std::_Vector_base<Face, std::allocator<Face> >::_M_allocate(unsigned long)
+  0.00      7.14     0.00        1     0.00     0.03  std::_Vector_base<Face, std::allocator<Face> >::_Vector_impl::~_Vector_impl()
+  0.00      7.14     0.00        1     0.00     0.03  std::_Vector_base<Face, std::allocator<Face> >::~_Vector_base()
+  0.00      7.14     0.00        1     0.00     0.00  std::__new_allocator<Face>::deallocate(Face*, unsigned long)
+  0.00      7.14     0.00        1     0.00     0.00  std::__new_allocator<Face>::allocate(unsigned long, void const*)
+  0.00      7.14     0.00        1     0.00     0.00  std::allocator_traits<std::allocator<Face> >::deallocate(std::allocator<Face>&, Face*, unsigned long)
+  0.00      7.14     0.00        1     0.00     0.00  std::allocator_traits<std::allocator<Face> >::allocate(std::allocator<Face>&, unsigned long)
+  0.00      7.14     0.00        1     0.00     0.00  std::allocator_traits<std::allocator<Face> >::max_size(std::allocator<Face> const&)
+  0.00      7.14     0.00        1     0.00     0.01  std::span<Vertex, 18446744073709551615ul>::span<Vertex*>(Vertex*, unsigned long)
+  0.00      7.14     0.00        1     0.00     0.00  std::vector<Face, std::allocator<Face> >::_S_max_size(std::allocator<Face> const&)
+  0.00      7.14     0.00        1     0.00     0.00  std::vector<Face, std::allocator<Face> >::_S_relocate(Face*, Face*, Face*, std::allocator<Face>&)
+  0.00      7.14     0.00        1     0.00     0.00  std::vector<Face, std::allocator<Face> >::reserve(unsigned long)
+  0.00      7.14     0.00        1     0.00     0.00  std::__detail::__extent_storage<18446744073709551615ul>::__extent_storage(unsigned long)
+  0.00      7.14     0.00        1     0.00     0.00  Face* std::__relocate_a<Face*, Face*, std::allocator<Face> >(Face*, Face*, Face*, std::allocator<Face>&)
+  0.00      7.14     0.00        1     0.00     0.00  Vertex* std::__to_address<Vertex>(Vertex*)
+  0.00      7.14     0.00        1     0.00     0.00  std::enable_if<std::__is_bitwise_relocatable<Face, void>::value, Face*>::type std::__relocate_a_1<Face, Face>(Face*, Face*, Face*, std::allocator<Face>&)
+  0.00      7.14     0.00        1     0.00     0.00  unsigned long const& std::min<unsigned long>(unsigned long const&, unsigned long const&)
+  0.00      7.14     0.00        1     0.00     0.02  void std::_Destroy<Face*, Face>(Face*, Face*, std::allocator<Face>&)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2021 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.

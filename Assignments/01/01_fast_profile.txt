@@ -1,0 +1,49 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 49.30      3.52     3.52 617226328     0.00     0.00  computePerimeter(Face const&, std::span<Vertex, 18446744073709551615ul> const&)
+ 20.31      4.97     1.45                             etext
+ 20.17      6.41     1.44 28055742     0.00     0.00  readData(char const*, std::span<Vertex, 18446744073709551615ul>&, std::vector<Face, std::allocator<Face> >&)
+  2.94      6.62     0.21                             _init
+  2.80      6.82     0.20                             atexit
+  2.10      6.97     0.15 561114875     0.00     0.00  _fini
+  0.98      7.04     0.07                             __stack_chk_fail_local
+  0.84      7.10     0.06        1    60.00    75.00  transform(Vertex const&)
+  0.42      7.13     0.03                             frame_dummy
+  0.14      7.14     0.01                             __do_global_dtors_aux
+  0.00      7.14     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z8readDataPKcRSt4spanI6VertexLm18446744073709551615EERSt6vectorI4FaceSaIS6_EE
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2021 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
