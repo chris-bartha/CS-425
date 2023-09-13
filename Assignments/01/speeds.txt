@@ -1,0 +1,6 @@
+The smallest triangle is 22150987
+10.13 real	1041000 memory (KB)
+The smallest triangle is 22150987
+2.14 real	1041204 memory (KB)
+The smallest triangle is 22150987
+2.42 real	1041200 memory (KB)
