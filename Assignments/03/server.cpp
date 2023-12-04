@@ -23,7 +23,11 @@
 //  (Don't use any of them.  Generally, above 9000 is usually pretty clear)
 //
 const uint16_t DefaultPort = 8146; // Update this variable with your assigned port value
-const int NumThreads = 4;
+//const int NumThreads = 4;
+
+// 4 made sense but this allows for a dynamic amount of threads that
+//	is based on relative hardware specificaitons
+const int NumThreads = std::thread::hardware_concurrency();
 
 // root dir
 const char* root = "/home/faculty/shreiner/public_html/03";
@@ -33,6 +37,9 @@ void join_all(std::vector<std::thread>& threads);
 
 int main(int argc, char* argv[]) {
 	uint16_t port = argc > 1 ? std::stol(argv[1]) : DefaultPort;
+
+	// print to console amt of concurretn threads supported
+	std::cout << NumThreads << std::endl;
 	// root stays constant	// Opens a connection on the given port.  With a suitable URL
 	//
 	//     http://<hostname>:<port> (e.g., http://blue.cs.sonoma.edu:8000)
