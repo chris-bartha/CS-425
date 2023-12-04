@@ -39,7 +39,6 @@ struct Session {
     //
     //  Constructors and destructors
     //
-
     Session(int client) : _client(client)
         { /* Empty */ }
 

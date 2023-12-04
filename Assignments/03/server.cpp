@@ -23,12 +23,17 @@
 //  (Don't use any of them.  Generally, above 9000 is usually pretty clear)
 //
 const uint16_t DefaultPort = 8146; // Update this variable with your assigned port value
+const int NumThreads = 4;
+
+// root dir
+const char* root = "/home/faculty/shreiner/public_html/03";
+
+void thread_session(Connection& connection, const char* root);
+void join_all(std::vector<std::thread>& threads);
 
 int main(int argc, char* argv[]) {
 	uint16_t port = argc > 1 ? std::stol(argv[1]) : DefaultPort;
-	// so i can use root in an async func
-	const char* root = "/home/faculty/shreiner/public_html/03";
-	// Opens a connection on the given port.  With a suitable URL
+	// root stays constant	// Opens a connection on the given port.  With a suitable URL
 	//
 	//     http://<hostname>:<port> (e.g., http://blue.cs.sonoma.edu:8000)
 	//
@@ -39,75 +44,83 @@ int main(int argc, char* argv[]) {
 	// When you connect from your web browser, use your unique port value
 	//   after the color (:) in the URL.
 	Connection connection(port);
-	auto sync = std::async(std::launch::async, [&](const char* root) {
-		// Process sessions.  A session begins with a web browser making a
-		//   request.  When the request is made, our connection "accepts"
-		//   the connection, and starts a session.
-		while (connection) {
+	// Process sessions.  A session begins with a web browser making a
+	//   request.  When the request is made, our connection "accepts"
+	//   the connection, and starts a session.
 
-			// A session is composed of a bunch of requests (from the "client",
-			//   like a web browser), and responses from us, the web "server".
-			//   Each request is merely an ASCII string (with some special
-			//   characters specially encoded.  We don't implement all that
-			//   fancy stuff here.  We're keeping it simple).
-			Session session(connection.accept());
+	// Creates vector of threads, in which we thread 
+	// the session processes
+	std::vector<std::thread> threads;
+	// thready stuff :)
+	for(int i = 0; i < NumThreads; i++) {
+		threads.emplace_back([&]() {
+			while (connection) {
+				// A session is composed of a bunch of requests (from the "client",
+				//   like a web browser), and responses from us, the web "server".
+				//   Each request is merely an ASCII string (with some special
+				//   characters specially encoded.  We don't implement all that
+				//   fancy stuff here.  We're keeping it simple).
+				// Session session(connection.accept());
+				thread_session(connection, root);
+			}
+		});
+	}
 
-			// A message received from the client will be a string like
-			//
-			//      GET <filename> HTTP/1.1 [plus a bunch of optional stuff]
-			//
-			//    Here, we merely read that string from the socket into
-			//    a string.
-			std::string msg;
-			session >> msg;
+	join_all(threads);
+}
 
-			// If you want to see the raw "protocol", uncomment the
-			//   following line:
-			//
-			// std::cout << msg;
+// just a quick function that closes all threads: 
+// name describes what it does
+void join_all(std::vector<std::thread>& threads) {
+	for(auto& thread : threads)
+		if(thread.joinable())
+			thread.join();
+}
 
-			// However, if our msg has requests in it, we send it to a
-			//   request parser, HTTPRequest.  The resulting request
-			//   contains the type of request, the filename, and other
-			//   information.
-			HTTPRequest request(msg);
+// threads the entire session. 
+void thread_session(Connection& connection, const char* root) {
+	Session session(connection.accept());
 
-			//  If you want to see the parsed message, just uncomment the
-			//    following line:
-			//
-			// std::cout << request << "\n";
+	// A message received from the client will be a string like
+	//
+	//      GET <filename> HTTP/1.1 [plus a bunch of optional stuff]
+	//
+	//    Here, we merely read that string from the socket into
+	//    a string.
+	std::string msg;
+	session >> msg;
 
-			//  if you want to see the parsed options, uncomment the
-			//    following line
-			//
-			// std::cout << request.options() << "\n";
+	// If you want to see the raw "protocol", uncomment the
+	//    following line:
+	//
+	// std::cout << request << "\n";
 
-			// We create a response to the request, which we encode in
-			//   an HTTPResponse object.  It prepares the appropriate
-			//   HTTP header, and then includes all of the relevant
-			//   data that's to be sent back to the web browser.
-			//
-			// Web servers have a concept of a "root" directory (similar to
-			//   a filesystem), which is the top-level of where all of the
-			//   files the server is able to send is located.  We include
-			//   that path here, so we're all looking at the same files.
-			const char* root = "/home/faculty/shreiner/public_html/03";
-			HTTPResponse response(request, root);
+	// However, if our msg has requests in it, we send it to a
+	//   request parser, HTTPRequest.  The resulting request
+	//   contains the type of request, the filename, and other
+	//   information.
+	HTTPRequest request(msg);
+	// We create a response to the request, which we encode in
+	//   an HTTPResponse object.  It prepares the appropriate
+	//   HTTP header, and then includes all of the relevant
+	//   data that's to be sent back to the web browser.
+	//
+	// Web servers have a concept of a "root" directory (similar to
+	//   a filesystem), which is the top-level of where all of the
+	//   files the server is able to send is located.  We include
+	//   that path here, so we're all looking at the same files.
+	HTTPResponse response(request, root);
 
-			//  Again, if you want to see the contents of the response
-			//    (specifically, the header, which is human readable, but
-			//    not the returned data), you can just print this to
-			//    std::cout as well.
-			//
-			// std::cout << response << "\n";
+	//  Again, if you want to see the contents of the response
+	//    (specifically, the header, which is human readable, but
+	//    not the returned data), you can just print this to
+	//    std::cout as well.
+	//
+	// std::cout << response << "\n";
 
-			// Most importantly, send the response back to the web client.
-			//
-			// We keep using the same session until we get an empty
-			//   message, which indicates this session is over.
-			session << response;
-		}
-	}, root);
-
-	sync.wait();
+	// Most importantly, send the response back to the web client.
+	//
+	// We keep using the same session until we get an empty
+	//   message, which indicates this session is over.
+	session << response;
 }
