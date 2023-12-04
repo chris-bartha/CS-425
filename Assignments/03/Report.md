@@ -4,7 +4,7 @@
 
 A table showing the speeds of each commit, as well as the speedups between the first commit, as well as its previous commit, when applicable.
 
-| Version | Time | Speedup/1 | Speedup/Previous | Changes |
+| Commit (Link) | Time | Speedup/1 | Speedup/Previous | Changes |
 | :-----: | ---- | :-----: | :------: | ------- |
 | [01](https://github.com/chris-bartha/CS-425/commit/caaa0be7f835553c83180c7c20e52ccad3f2dd62) | 29.25s | &mdash; | &mdash; | Initial version - no changes |
 | [02](https://github.com/chris-bartha/CS-425/commit/abf4f7e31f13c51af76d0176ff4ed4800c179c19) | 25.79s | 1.134x | &mdash; | Simple async function implementation |
