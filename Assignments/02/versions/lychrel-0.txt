@@ -9,13 +9,11 @@
 //    iterations, along with the size and final palindrome number
 //
 
-// #include <algorithm>
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <vector>
-#include <thread>
-#include <mutex>
 
 #include "LychrelData.h"
 
@@ -32,11 +30,20 @@ using Records = std::vector<Record>;
 const size_t MaxIterations = 7500;
 const size_t MaxThreads = 10;
 
-// Mutex for synchronization when updating shared variables
-std::mutex mutex;
+//
+// --- main ---
+//
+int main() {
+    LychrelData data;
 
-void ProcessRange(const LychrelData& data, size_t start, size_t end, Records& records, size_t& maxIter) {
-    for (size_t i = start; i < end; ++i) {
+    std::cerr << "Processing " << data.size() << " values ...\n";
+
+    size_t maxIter = 0;  // Records the current maximum number of iterations
+    Records records; // list of values that took maxIter iterations
+
+    // Iterate across all available data values, processing them using the
+    //   reverse-digits and sum technique described in class.
+    for (auto i = 0; i < data.size(); ++i) {
         Number number = data[i];
 
         size_t iter = 0;
@@ -85,59 +92,23 @@ void ProcessRange(const LychrelData& data, size_t start, size_t end, Records& re
             n = sum;
         }
 
-        // Update records within the critical section
-        {
-            std::lock_guard<std::mutex> lock(mutex);
+        // Update our records.  First, determine if we have a new
+        //   maximum number of iterations that isn't the control limit
+        //   (MaxIterations) for a particular number.  If we're less
+        //   tha the current maximum (maxIter) or we've exceeded the number
+        //   of permissible iterations, ignore the current result and move
+        //   onto the next number.
+        if (iter < maxIter || iter == MaxIterations) { continue; }
 
-            // Update our records.  First, determine if we have a new
-            //   maximum number of iterations that isn't the control limit
-            //   (MaxIterations) for a particular number.  If we're less
-            //   tha the current maximum (maxIter) or we've exceeded the number
-            //   of permissible iterations, ignore the current result and move
-            //   onto the next number.
-            if (iter < maxIter || iter == MaxIterations) { continue; }
-
-            // Otherwise update our records, which possibly means discarding
-            //   our current maximum and rebuilding our records list.
-            Record record{number, n};
-            if (iter > maxIter) {
-                records.clear();
-                maxIter = iter;
-            }
-
-            records.push_back(record);
+        // Otherwise update our records, which possibly means discarding
+        //   our current maximum and rebuilding our records list.
+        Record record{number, n};
+        if (iter > maxIter) {
+            records.clear();
+            maxIter = iter;
         }
-    }
-}
 
-//
-// --- main ---
-//
-int main() {
-    LychrelData data;
-
-    std::cerr << "Processing " << data.size() << " values ...\n";
-
-    size_t maxIter = 0;  // Records the current maximum number of iterations
-    Records records; // list of values that took maxIter iterations
-
-    // Calculate the number of elements each thread will process
-    size_t numElementsPerThread = data.size() / MaxThreads;
-
-    // Vector to hold thread objects
-    std::vector<std::thread> threads;
-
-    // Create and launch threads
-    for (size_t i = 0; i < MaxThreads; ++i) {
-        size_t start = i * numElementsPerThread;
-        size_t end = (i == MaxThreads - 1) ? data.size() : (i + 1) * numElementsPerThread;
-
-        threads.emplace_back(ProcessRange, std::ref(data), start, end, std::ref(records), std::ref(maxIter));
-    }
-
-    // Join threads to wait for their completoin
-    for (auto& thread : threads) {
-        thread.join();
+        records.push_back(record);
     }
 
     // Output our final results

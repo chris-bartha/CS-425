@@ -144,8 +144,8 @@ int main() {
     std::cout << "\nmaximum number of iterations = " << maxIter << "\n";
     for (auto& [number, palindrome] : records) {
         std::cout
-                << "\t" << number
-                << " : [" << palindrome.size() << "] "
-                << palindrome << "\n";
+            << "\t" << number
+            << " : [" << palindrome.size() << "] "
+            << palindrome << "\n";
     }
 }
